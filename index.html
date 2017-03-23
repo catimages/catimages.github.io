@@ -1,0 +1,57 @@
+<html>
+	<head>
+		<style type="text/css">
+			html,body {
+			  margin: 0px;  
+			  overflow: hidden;
+			  background-color: #000; 
+			}
+
+			img {
+				position: absolute;
+				opacity: 0;
+				width: 100%;
+				height: auto;
+				transition: all 4s ease;
+			}
+
+			.show {
+				opacity: 1;
+			}
+
+		</style>
+	</head>
+	<body>
+		<img id="1" class="show" src="https://thecatapi.com/api/images/get?format=src">
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script type="text/javascript">
+			var imageIndex = 1;
+
+			setInterval(function(){
+				//window.location.href = window.location.pathname;
+				$('<img id="' + (imageIndex + 1) + '" src="https://thecatapi.com/api/images/get?format=src&type=jpg&' + new Date().getTime() + '">').insertAfter($("img").last());
+				setTimeout(function(){
+					//start transition
+					var winHeight = $(window).height();
+					var elementHeight = $("#" + (imageIndex + 1)).height();
+
+					console.log("-----");
+					console.log(winHeight);
+					console.log(elementHeight);
+
+					var newTop = (winHeight/2) - (elementHeight/2);
+					console.log(newTop);
+					$("#" + (imageIndex + 1)).css('top',newTop + "px");					
+
+					$("#" + (imageIndex + 1)).addClass("show");
+					$("#" + imageIndex ).removeClass("show");
+					setTimeout(function(){
+						$("#" + imageIndex).remove();
+						imageIndex += 1;
+					},5000);
+				},6000);
+			},60000);
+		</script>
+	</body>
+</html>
